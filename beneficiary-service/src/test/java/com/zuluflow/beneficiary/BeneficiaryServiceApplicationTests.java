@@ -50,4 +50,22 @@ class BeneficiaryServiceApplicationTests {
                 .andExpect(jsonPath("$.name").value("Integration Test Corp"));
     }
 
+    @Test
+    void shouldRejectInvalidBankCode() throws Exception {
+        // Testing the Validation Layer
+        String badPayload = """
+            {
+                "clientId": "TEST-CLIENT-002",
+                "name": "Bad Actor",
+                "accountNumber": "123",
+                "bankCode": "1", 
+                "accountType": "SAVINGS"
+            }
+        """;
+
+        mockMvc.perform(post("/api/v1/beneficiaries")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(badPayload))
+                .andExpect(status().isBadRequest()); // Expect HTTP 400
+    }
 }

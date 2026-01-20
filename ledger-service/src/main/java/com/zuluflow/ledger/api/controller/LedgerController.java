@@ -41,8 +41,7 @@ public class LedgerController {
                 request.amount(),
                 request.reference()
         );
-        return Respocd ..
-        nseEntity.ok(tx);
+        return ResponseEntity.ok(tx);
     }
 }
 
